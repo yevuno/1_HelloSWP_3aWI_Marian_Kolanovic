@@ -1,17 +1,25 @@
-namespace MyFirstCat
+﻿using System;
+
+namespace _2._1_MyFirstCat
 {
     public class Cat
     {
-        private string? _Color = null;
-        private DateTime? _Birthdate = null;
+        public string Color { get; set; } = "Unbekannt";
+        public DateTime? Birthdate { get; set; }
+        public int Age { get; private set; }
 
-        public string Color {
-            get { return _Color; }
-            set {
-                if (_Color == value) return;
-                _Color = value;
-            };
+        public void CalculateAge()
+        {
+            if (Birthdate.HasValue)
+            {
+                Age = DateTime.Now.Year - Birthdate.Value.Year;
+                if (DateTime.Now < Birthdate.Value.AddYears(Age))
+                    Age--;
+            }
+            else
+            {
+                Age = 0;
+            }
         }
-
     }
 }
