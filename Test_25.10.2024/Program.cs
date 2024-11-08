@@ -4,25 +4,48 @@ class Program
 {
     static void Main()
     {
-        Console.WriteLine("Bitte geben Sie eine ganze Zahl ein:");
-        string input = Console.ReadLine();
+        while (true)
+        {
+            Console.WriteLine("Bitte geben Sie eine ganze Zahl ein:");
+            string input = Console.ReadLine();
 
-        if (int.TryParse(input, out int number))
+            if (int.TryParse(input, out int number))
+            {
+                double result = HandleMathOperation(number);
+                Console.WriteLine($"Ergebnis: {result}");
+            }
+            else
+            {
+                HandleStringOperation(input);
+            }
+        }
+    }
+
+    public static double HandleMathOperation(int number)
+    {
+        while (true)
         {
             Console.WriteLine(ConsoleText("number"));
-
             string operation = Console.ReadLine();
             double result = 0;
 
             if (operation == "!" || operation == "sqrt")
             {
-                if (operation == "!")
+                try
                 {
-                    result = Fakultaet(number);
+                    if (operation == "!")
+                    {
+                        result = Fakultaet(number);
+                    }
+                    else if (operation == "sqrt")
+                    {
+                        result = SquareRootOperation.SquareRoot(number);
+                    }
+                    return result;
                 }
-                else if (operation == "sqrt")
+                catch (ArgumentException ex)
                 {
-                    result = SquareRootOperation.SquareRoot(number);
+                    Console.WriteLine($"Fehler: {ex.Message}. Bitte versuchen Sie es erneut.");
                 }
             }
             else
@@ -32,37 +55,48 @@ class Program
 
                 if (double.TryParse(secondInput, out double secondNumber))
                 {
-                    result = PerformOperation(operation, number, secondNumber);
+                    try
+                    {
+                        result = PerformOperation(operation, number, secondNumber);
+                        return result;
+                    }
+                    catch (DivideByZeroException ex)
+                    {
+                        Console.WriteLine($"Fehler: {ex.Message}. Bitte geben Sie eine andere Zahl ein.");
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Console.WriteLine($"Fehler: {ex.Message}. Bitte versuchen Sie es erneut.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Die zweite Eingabe ist keine gültige Zahl.");
-                    return;
+                    Console.WriteLine("Die zweite Eingabe ist keine gültige Zahl. Bitte erneut eingeben.");
                 }
             }
-
-            Console.WriteLine($"Ergebnis: {result}");
         }
-        else
+    }
+
+    public static void HandleStringOperation(string input)
+    {
+        while (true)
         {
-
             Console.WriteLine(ConsoleText("text"));
-
             string operation = Console.ReadLine();
 
             switch (operation)
             {
                 case "1":
                     Console.WriteLine($"Ergebnis: {RemoveVowels(input)}");
-                    break;
+                    return;
                 case "2":
                     Console.WriteLine($"Ergebnis: {ReverseString(input)}");
-                    break;
+                    return;
                 case "3":
                     Console.WriteLine($"Ergebnis: {input.Length}");
-                    break;
+                    return;
                 default:
-                    Console.WriteLine("Ungültige Auswahl.");
+                    Console.WriteLine("Ungültige Auswahl. Bitte erneut versuchen.");
                     break;
             }
         }
@@ -90,6 +124,7 @@ class Program
 
     public static int Fakultaet(int n)
     {
+        if (n < 0) throw new ArgumentException("Die Fakultät einer negativen Zahl ist nicht definiert.");
         if (n <= 1) return 1;
         return n * Fakultaet(n - 1);
     }
@@ -112,7 +147,7 @@ class Program
         }
         else if (consoleChoice == "text")
         {
-            return "Sie keine Zahl eingegeben oder eine Zeichenkette eingegeben. Was wollen Sie damit machen? \n 1) Alle Selbstlaute entfernen \n 2) Die Zeichenkette umdrehen \n 3) Zeichenkette Länge anzeigen";
+            return "Sie haben keine Zahl eingegeben. Was wollen Sie damit machen? \n 1) Alle Selbstlaute entfernen \n 2) Die Zeichenkette umdrehen \n 3) Zeichenkette Länge anzeigen";
         }
         else
         {
@@ -139,6 +174,6 @@ class Program
             result += input[i - 1];
         }
 
-        return new string(result);
+        return result;
     }
 }
