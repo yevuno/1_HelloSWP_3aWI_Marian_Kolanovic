@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 
 namespace _2._1_MyFirstCat
 {
@@ -7,14 +6,39 @@ namespace _2._1_MyFirstCat
     {
         static void Main(string[] args)
         {
-            var myCat = new Cat();
-            myCat.SetColor("Schwarz");
-            myCat.SetBirthdate(new DateTime(2008, 1, 23));
-            myCat.CalculateAge();
+            Tierheim meinTierheim = new Tierheim();
 
-            var catInfo = myCat.GetCatInfo();
-            Console.WriteLine($"Die Katze hat die Farbe {catInfo.Item1}");
-            Console.WriteLine($"Die Katze ist {myCat.Age} Jahre alt.");
+            bool next = true;
+            while (next)
+            {
+                var newCat = new Cat();
+
+                Console.Write("Gib die Farbe der Katze ein: ");
+                string color = Console.ReadLine();
+                newCat.SetColor(color);
+
+                Console.Write("Gib das Geburtsdatum der Katze ein (JJJJ-MM-TT): ");
+                DateTime geburtsdatum;
+                while (!DateTime.TryParse(Console.ReadLine(), out geburtsdatum))
+                {
+                    Console.Write("Ungültiges Datum! Bitte im Format JJJJ-MM-TT eingeben: ");
+                }
+                newCat.SetBirthdate(geburtsdatum);
+
+                newCat.CalculateAge();
+
+                meinTierheim.AddCat(newCat);
+
+                Console.Write("Möchtest du eine weitere Katze hinzufügen? (Y/n): ");
+                string answer = Console.ReadLine().ToLower();
+                if (answer != "Y")
+                {
+                    next = false;
+                }
+            }
+
+            Console.WriteLine("\nAlle Katzen im Tierheim:");
+            meinTierheim.ShowCats();
         }
     }
 }
