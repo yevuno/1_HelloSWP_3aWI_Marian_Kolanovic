@@ -4,9 +4,19 @@ namespace _2._1_MyFirstCat
 {
     public class Cat
     {
-        public string Color { get; set; } = "Unbekannt";
-        public DateTime? Birthdate { get; set; }
+        private string Color { get; set; } = "Unbekannt";
+        private DateTime? Birthdate { get; set; }
         public int Age { get; private set; }
+
+        public void SetColor(string color)
+        {
+            Color = color;
+        }
+
+        public void SetBirthdate(DateTime birthdate)
+        {
+            Birthdate = birthdate;
+        }
 
         public void CalculateAge()
         {
@@ -20,6 +30,11 @@ namespace _2._1_MyFirstCat
             {
                 Age = 0;
             }
+        }
+
+        public (string, DateTime?) GetCatInfo()
+        {
+            return (Color, Birthdate);
         }
     }
 }

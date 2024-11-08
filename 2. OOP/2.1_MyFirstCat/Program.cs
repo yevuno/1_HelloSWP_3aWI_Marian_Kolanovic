@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 
 namespace _2._1_MyFirstCat
 {
@@ -6,10 +7,13 @@ namespace _2._1_MyFirstCat
     {
         static void Main(string[] args)
         {
-            var myCat = new Cat { Color = "Schwarz", Birthdate = new DateTime(2008, 1, 23) };
+            var myCat = new Cat();
+            myCat.SetColor("Schwarz");
+            myCat.SetBirthdate(new DateTime(2008, 1, 23));
             myCat.CalculateAge();
 
-            Console.WriteLine($"Die Katze hat die Farbe: {myCat.Color}");
+            var catInfo = myCat.GetCatInfo();
+            Console.WriteLine($"Die Katze hat die Farbe: {catInfo.Item1}");
             Console.WriteLine($"Die Katze ist {myCat.Age} Jahre alt.");
         }
     }
