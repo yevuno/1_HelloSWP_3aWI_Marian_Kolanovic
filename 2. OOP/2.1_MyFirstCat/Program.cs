@@ -29,9 +29,9 @@ namespace _2._1_MyFirstCat
 
                 meinTierheim.AddCat(newCat);
 
-                Console.Write("Möchtest du eine weitere Katze hinzufügen? (Y/n): ");
+                Console.Write("Möchtest du eine weitere Katze hinzufügen? (y/n): ");
                 string answer = Console.ReadLine().ToLower();
-                if (answer != "Y")
+                if (answer != "y")
                 {
                     next = false;
                 }
