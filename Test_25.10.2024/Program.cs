@@ -14,38 +14,44 @@ class Program
             string operation = Console.ReadLine();
             double result = 0;
 
-            if (operation == "!" || operation == "sqrt")
+            try
             {
-                if (operation == "!")
+                if (operation == "!" || operation == "sqrt")
                 {
-                    result = Fakultaet(number);
-                }
-                else if (operation == "sqrt")
-                {
-                    result = SquareRootOperation.SquareRoot(number);
-                }
-            }
-            else
-            {
-                Console.WriteLine("Bitte geben Sie eine zweite Zahl ein:");
-                string secondInput = Console.ReadLine();
-
-                if (double.TryParse(secondInput, out double secondNumber))
-                {
-                    result = PerformOperation(operation, number, secondNumber);
+                    if (operation == "!")
+                    {
+                        result = Fakultaet(number);
+                    }
+                    else if (operation == "sqrt")
+                    {
+                        result = SquareRootOperation.SquareRoot(number);
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Die zweite Eingabe ist keine gültige Zahl.");
-                    return;
-                }
-            }
+                    Console.WriteLine("Bitte geben Sie eine zweite Zahl ein:");
+                    string secondInput = Console.ReadLine();
 
-            Console.WriteLine($"Ergebnis: {result}");
+                    if (double.TryParse(secondInput, out double secondNumber))
+                    {
+                        result = PerformOperation(operation, number, secondNumber);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Die zweite Eingabe ist keine gültige Zahl.");
+                        return;
+                    }
+                }
+
+                Console.WriteLine($"Ergebnis: {result}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ein Fehler ist aufgetreten: {ex.Message}");
+            }
         }
         else
         {
-
             Console.WriteLine(ConsoleText("text"));
 
             string operation = Console.ReadLine();
@@ -75,16 +81,15 @@ class Program
             case "*":
                 return input1 * input2;
             case "/":
-                if (input2 != 0)
-                    return input1 / input2;
-                else
-                    throw new DivideByZeroException("Division durch Null ist nicht erlaubt");
+                if (input2 == 0)
+                    throw new DivideByZeroException("Division durch Null ist nicht erlaubt.");
+                return input1 / input2;
             case "+":
                 return input1 + input2;
             case "-":
                 return input1 - input2;
             default:
-                throw new ArgumentException("Ungültige Operation");
+                throw new ArgumentException("Ungültige Operation.");
         }
     }
 
@@ -99,7 +104,7 @@ class Program
         public static double SquareRoot(double input)
         {
             if (input < 0)
-                throw new ArgumentException("Die Eingabe darf nicht negativ sein");
+                throw new ArgumentException("Die Eingabe darf nicht negativ sein.");
             return Math.Sqrt(input);
         }
     }
@@ -112,11 +117,11 @@ class Program
         }
         else if (consoleChoice == "text")
         {
-            return "Sie keine Zahl eingegeben oder eine Zeichenkette eingegeben. Was wollen Sie damit machen? \n 1) Alle Selbstlaute entfernen \n 2) Die Zeichenkette umdrehen \n 3) Zeichenkette Länge anzeigen";
+            return "Sie haben keine Zahl oder eine Zeichenkette eingegeben. Was wollen Sie damit machen? \n 1) Alle Selbstlaute entfernen \n 2) Die Zeichenkette umdrehen \n 3) Zeichenkette Länge anzeigen";
         }
         else
         {
-            return "Ungültige Eingabe";
+            return "Ungültige Eingabe.";
         }
     }
 
@@ -139,6 +144,6 @@ class Program
             result += input[i - 1];
         }
 
-        return new string(result);
+        return result;
     }
 }
