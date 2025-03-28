@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schulverwaltung</title>
+    <script defer src="script_school.js"></script>
+    <style>
+        /* Grundlegende Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(145deg, #f3f4f9, #e1e5ec);
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 3em;
+            text-align: center;
+            color: #4A90E2;
+            margin-top: 30px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            color: #4A90E2;
+            margin-top: 20px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        form,
+        ul {
+            margin: 20px auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Formularfelder */
+        label {
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        input,
+        select,
+        button {
+            font-size: 1em;
+            padding: 10px;
+            width: 100%;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        select:focus,
+        button:focus {
+            outline: none;
+            border-color: #4A90E2;
+        }
+
+        input[type="date"] {
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Buttons */
+        button {
+            background-color: #4A90E2;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #357ABD;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            background-color: #1F5C8A;
+        }
+
+        /* Liste der Schüler */
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        li:hover {
+            background-color: #e1e5ec;
+            transform: translateY(-5px);
+        }
+
+        /* Eingabefeld für die Klasse */
+        input[type="text"] {
+            background-color: #f9f9f9;
+            border: 2px solid #ddd;
+        }
+
+        input[type="text"]:focus {
+            border-color: #4A90E2;
+        }
+
+        /* Text im Resultatbereich */
+        p {
+            font-size: 1.2em;
+            color: #333;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Responsives Design */
+        @media (max-width: 768px) {
+
+            form,
+            ul {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Schulverwaltung</h1>
+
+    <h2>Neuen Schüler hinzufügen</h2>
+    <form id="addStudentForm">
+        <label>Geburtstag: <input type="date" id="geburtstag" required></label>
+        <label>
+            Geschlecht:
+            <select id="geschlecht" required>
+                <option value="männlich">Männlich</option>
+                <option value="weiblich">Weiblich</option>
+            </select>
+        </label>
+        <label>Klasse: <input type="text" id="klasse" placeholder="z.B. 10A" required></label>
+        <button type="submit">Schüler hinzufügen</button>
+    </form>
+
+    <h2>Alle Schüler der Schule abrufen</h2>
+    <button id="getAllStudents">Lade alle Schüler</button>
+    <ul id="studentsList"></ul>
+
+    <h2>Schüler einer bestimmten Klasse abrufen</h2>
+    <input type="text" id="classFilter" placeholder="z.B. 10A">
+    <button id="getStudentsByClass">Laden</button>
+    <ul id="classStudentsList"></ul>
+
+    <h2>Kann eine Klasse in einem Klassenraum unterrichtet werden?</h2>
+    <label>Klasse: <input type="text" id="checkClass" placeholder="z.B. 10A"></label>
+    <label>Raumgröße in m²: <input type="text" id="roomSize" placeholder="z.B. 50"></label>
+    <button id="checkRoom">Prüfen</button>
+    <p id="roomCheckResult"></p>
+</body>
+
+</html>
